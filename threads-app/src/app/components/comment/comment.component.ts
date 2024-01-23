@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, effect, inject, signal } from '@angular/core';
 import { CommentFormComponent } from '../comment-form/comment-form.component';
 import { Comment } from '../../../../interfaces/comments.interface';
+import { CommentService } from '../../services/comment.service';
 
 @Component({
   selector: 'app-comment',
@@ -12,17 +13,27 @@ import { Comment } from '../../../../interfaces/comments.interface';
 })
 export class CommentComponent {
   @Input() comment!: Comment;
-  isExpanded = false;
-  isReplying = false;
+  isExpanded = signal<boolean>(false);
+  isReplying = signal<boolean>(false);
+  commonService = inject(CommentService)
+  nestedComments = signal<Comment[]>([]);
+
+  nestedCommentsEffect = effect(() => {
+    if (this.isExpanded()) {
+      this.commonService.getComments(this.comment._id).subscribe(comments => {
+        this.nestedComments.set(comments)
+      })
+    }
+  })
 
   toggleReply() {
-    this.isReplying = !this.isReplying;
-    if (this.isReplying) {
-      this.isExpanded = !this.isExpanded
+    this.isReplying.set(!this.isReplying());
+    if (this.isReplying()) {
+      this.isExpanded.set(!this.isExpanded)
     }
   }
 
   toggleExpand() {
-    this.isExpanded = !this.isExpanded;
+    this.isExpanded.set(!this.isExpanded());
   }
 }
