@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommentComponent } from '../comment/comment.component';
+import { CommentComponent } from '../components/comment/comment.component';
 
 @Component({
   selector: 'app-home',
