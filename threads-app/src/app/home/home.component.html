@@ -1,5 +1,3 @@
-<section class="max-w-md mx-auto flex flex-col gap-8">
-    <app-comment></app-comment>
-    <app-comment></app-comment>
-    <app-comment></app-comment>
+<section class="max-w-full w-fit mx-auto flex flex-col gap-8">
+    <app-comment [comment]="comment" *ngFor="let comment of comments()"></app-comment>
 </section>
