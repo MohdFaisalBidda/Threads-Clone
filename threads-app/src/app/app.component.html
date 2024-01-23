@@ -1,12 +1,27 @@
 <div class="min-h-screen flex flex-col">
-  <header class="h-20 px-10 bg-blue-400 text-white flex items-center justify-between">
-    <span class="text-2xl font-bold">Threads</span>
+  <header
+    class="h-20 px-10 bg-blue-400 text-white flex items-center justify-between"
+  >
+    <a
+      href=""
+      class="group relative inline-block text-sm font-medium text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
+      routerLink="/home"
+    >
+    <span class="absolute inset-0 translate-x-0.5 translate-y-1 bg-indigo-600 transition-transform group-hover:translate-x-0 group-hover:translate-y-0 duration-200"></span>
+    <span class="text-xl font-bold relative block border border-current bg-white px-4 py-1.5">Threads</span>
+  </a>
     <nav>
       <ul class="flex gap-x-4 text-xl">
-        <li routerLinkActive="underline" class="hover:underline hover:underline-offset-4">
-          <a routerLink="/">Home</a>
+        <li
+          routerLinkActive="underline underline-offset-4"
+          class="hover:underline hover:underline-offset-4"
+        >
+          <a routerLink="/home">Home</a>
         </li>
-        <li routerLinkActive="underline" class="hover:underline hover:underline-offset-4">
+        <li
+          routerLinkActive="underline underline-offset-4"
+          class="hover:underline hover:underline-offset-4"
+        >
           <a routerLink="/about">About</a>
         </li>
       </ul>
