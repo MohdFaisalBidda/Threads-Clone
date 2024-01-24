@@ -4,11 +4,12 @@ import { CommentService } from '../services/comment.service';
 import { Comment } from '../../../interfaces/comments.interface';
 import { CommonModule } from '@angular/common';
 import { UsersService } from '../services/users.service';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommentComponent, CommonModule],
+  imports: [CommentComponent, CommonModule,LoginComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

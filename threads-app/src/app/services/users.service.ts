@@ -19,6 +19,10 @@ export class UsersService {
     })
   }
 
+  findUserByName(user: User) {
+    return this.http.get<User>(`${environment.apiBaseUrl}/${user._id}`)
+  }
+
   saveUsertoLocalStorage(user: User) {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem(this.localStorageKey, JSON.stringify(user))

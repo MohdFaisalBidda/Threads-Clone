@@ -10,7 +10,7 @@ import { UsersService } from './services/users.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent  {
   title = 'threads-app';
  
   username: string = '';
