@@ -1,6 +1,6 @@
 <div class="min-h-screen flex flex-col">
   <header
-    class="h-20 px-10 bg-blue-400 text-white flex items-center justify-between"
+    class="h-20 px-10 bg-gradient-to-r from-green-300 via-blue-500 to-pink-600 text-white flex items-center justify-between"
   >
     <a
       href=""
@@ -8,7 +8,7 @@
       routerLink="/home"
     >
       <span
-        class="absolute inset-0 translate-x-0.5 translate-y-1 bg-indigo-600 transition-transform group-hover:translate-x-0 group-hover:translate-y-0 duration-200"
+        class="absolute inset-0 translate-x-0.5 translate-y-1 bg-gradient-to-r from-indigo-500 to-red-600 transition-transform group-hover:translate-x-0 group-hover:translate-y-0 duration-200"
       ></span>
       <span
         class="text-xl font-bold relative block border border-current bg-white px-4 py-1.5"
@@ -16,21 +16,24 @@
       >
     </a>
     <nav>
-      <!-- <ul *ngIf="username; else loginForm" class="flex gap-x-4 text-xl">
+      <ul
+        *ngIf="userService.getUserFromLocalStorage(); else loginForm"
+        class="flex gap-x-4 text-xl"
+      >
         <li
           routerLinkActive="underline underline-offset-4"
           class="hover:underline hover:underline-offset-4"
         >
-          <a routerLink="/home">Login</a>
+          <a (click)="userService.removeUserFromLocalStorage()">Logout</a>
         </li>
         <li
           routerLinkActive="underline underline-offset-4"
           class="hover:underline hover:underline-offset-4"
         >
-          <a routerLink="/about">Register</a>
+          <a routerLink="/about">About</a>
         </li>
-      </ul> -->
-      <!-- <ng-template #loginForm> -->
+      </ul>
+      <ng-template #loginForm>
         <ul class="flex gap-x-4 text-xl">
           <li
             routerLinkActive="underline underline-offset-4"
@@ -45,7 +48,7 @@
             <a routerLink="/register">Register</a>
           </li>
         </ul>
-      <!-- </ng-template> -->
+      </ng-template>
     </nav>
   </header>
   <main class="px-3 py-4">

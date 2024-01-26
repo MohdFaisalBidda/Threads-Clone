@@ -8,10 +8,15 @@ import { Model, Types } from 'mongoose';
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<User>) { }
 
-  create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto) {
     try {
-      const userToSave = new this.userModel(createUserDto)
-      return userToSave.save();
+      const userExists = await this.userModel.findOne({ name: createUserDto.name }).exec();
+      if (!userExists) {
+        const userToSave = new this.userModel(createUserDto)
+        return userToSave.save();
+      } else {
+        throw new BadRequestException("Username Already exists!")
+      }
     } catch (error) {
       throw new HttpException(error.message, 500)
     }
@@ -21,24 +26,23 @@ export class UsersService {
     return this.userModel.find().exec();
   }
 
-  async findOne(id: string) {
+  async findOne(username: string) {
     try {
-      const objectId = Types.ObjectId.isValid(id) ? new Types.ObjectId(id) : null;
-      if (objectId) {
-        const user = await this.userModel.findById(objectId).exec();
+      if (username) {
+        const user = await this.userModel.findOne({ name: username }).exec();
         if (user) {
           return user;
         } else {
-          throw new NotFoundException(`User with id ${id} not found`);
+          throw new NotFoundException(`Username with ${username} not found`);
         }
       } else {
-        throw new BadRequestException(`Invalid user ID ${id}`)
+        throw new BadRequestException(`Invalid username`)
       }
     } catch (error) {
       if (error instanceof HttpException) {
         throw error;
       } else {
-        throw new NotFoundException(`Failed to get the user by ID ${id}`);
+        throw new NotFoundException(`Failed to get the user by username ${username}`);
       }
     }
   }

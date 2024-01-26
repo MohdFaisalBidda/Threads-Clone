@@ -14,15 +14,15 @@ export class AppComponent  {
   title = 'threads-app';
  
   username: string = '';
-  constructor(private userService: UsersService) { }
+  constructor(public userService: UsersService) { }
   // userservice = inject(UsersService);
 
-  ngOnInit(): void {
-    const user = this.userService.getUserFromLocalStorage()
-    if (!user) {
-      this.userService.createUser(this.username)
-    }
-  }
+  // ngOnInit(): void {
+  //   const user = this.userService.getUserFromLocalStorage()
+  //   if (!user) {
+  //     this.userService.createUser(this.username)
+  //   }
+  // }
 
   // constructor() {
   //   const user = this.userservice.getUserFromLocalStorage()

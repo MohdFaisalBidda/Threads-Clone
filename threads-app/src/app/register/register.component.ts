@@ -13,13 +13,13 @@ import { Router } from '@angular/router';
 export class RegisterComponent {
   username: string = "";
 
-  constructor(private userService: UsersService,private router:Router) { }
+  constructor(private userService: UsersService, private router: Router) { }
 
   submitForm() {
     this.userService.createUser(this.username).subscribe((user) => {
       this.userService.saveUsertoLocalStorage(user);
       console.log(user);
-      this.router.navigate(["/login"])
+      this.router.navigate(["/home"])
     },
       (error) => {
         console.log("User not found", error);

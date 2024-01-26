@@ -16,9 +16,9 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return this.usersService.findOne(id);
+  @Get(':username')
+  async findOne(@Param('username') username: string) {
+    return this.usersService.findOne(username);
   }
 
   @Delete(':id')

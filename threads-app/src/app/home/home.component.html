@@ -1,6 +1,12 @@
-<section *ngIf="username; else loginForm" class="max-w-xl  mx-auto flex flex-col gap-8">
-    <app-comment [comment]="comment" *ngFor="let comment of comments()"></app-comment>
+<section
+  *ngIf="userService.getUserFromLocalStorage(); else loginForm"
+  class="max-w-xl mx-auto flex flex-col gap-8"
+>
+  <app-comment
+    [comment]="comment"
+    *ngFor="let comment of comments()"
+  ></app-comment>
 </section>
 <ng-template #loginForm>
-    <app-login></app-login>
+  <app-login></app-login>
 </ng-template>

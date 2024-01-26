@@ -17,11 +17,13 @@ export class HomeComponent implements OnInit {
   commentService = inject(CommentService)
   comments = signal<Comment[]>([]);
   username: string = '';
-  constructor(private userService: UsersService) { }
+  constructor(public userService: UsersService) { }
   // userservice = inject(UsersService);
 
   ngOnInit(): void {
     const user = this.userService.getUserFromLocalStorage()
+    console.log(user);
+    
     if (!user) {
       this.userService.createUser(this.username)
     }
