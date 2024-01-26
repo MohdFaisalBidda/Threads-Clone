@@ -3,17 +3,20 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './schemas/user.schema.ts';
 import { Model, Types } from 'mongoose';
+import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private userModel: Model<User>) { }
+  constructor(@InjectModel(User.name) private userModel: Model<User>, private jwtService: JwtService) { }
 
-  async create(createUserDto: CreateUserDto) {
+  async register(createUserDto: CreateUserDto) {
     try {
-      const userExists = await this.userModel.findOne({ name: createUserDto.name }).exec();
+      const userExists = await this.userModel.findOne({ username: createUserDto.username }).exec();
       if (!userExists) {
-        const userToSave = new this.userModel(createUserDto)
-        return userToSave.save();
+        const hashedPass = await bcrypt.hash(createUserDto.password, 10);
+        const userToSave = await this.userModel.create({ username: createUserDto.username, password: hashedPass.toString() })
+        return userToSave;
       } else {
         throw new BadRequestException("Username Already exists!")
       }
@@ -26,14 +29,19 @@ export class UsersService {
     return this.userModel.find().exec();
   }
 
-  async findOne(username: string) {
+  async login(loginUserDto: CreateUserDto) {
     try {
-      if (username) {
-        const user = await this.userModel.findOne({ name: username }).exec();
+      if (loginUserDto.username) {
+        const user = await this.userModel.findOne({ username: loginUserDto.username }).exec();
         if (user) {
-          return user;
+          const decrpytedPass = await bcrypt.compare(loginUserDto.password, user.password);
+          if (decrpytedPass) {
+            return user;
+          } else {
+            throw new NotFoundException("Password is incorrect")
+          }
         } else {
-          throw new NotFoundException(`Username with ${username} not found`);
+          throw new NotFoundException(`${loginUserDto.username} username not found`);
         }
       } else {
         throw new BadRequestException(`Invalid username`)
@@ -42,10 +50,31 @@ export class UsersService {
       if (error instanceof HttpException) {
         throw error;
       } else {
-        throw new NotFoundException(`Failed to get the user by username ${username}`);
+        throw new NotFoundException(`Failed to get the user by username ${loginUserDto.username}`);
       }
     }
   }
+
+  // async findOne(username: string) {
+  //   try {
+  //     if (username) {
+  //       const user = await this.userModel.findOne({ username: username }).exec();
+  //       if (user) {
+  //         return user;
+  //       } else {
+  //         throw new NotFoundException(`${username} username not found`);
+  //       }
+  //     } else {
+  //       throw new BadRequestException(`Invalid username`)
+  //     }
+  //   } catch (error) {
+  //     if (error instanceof HttpException) {
+  //       throw error;
+  //     } else {
+  //       throw new NotFoundException(`Failed to get the user by username ${username}`);
+  //     }
+  //   }
+  // }
 
   async remove(id: string) {
     try {

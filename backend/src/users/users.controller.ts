@@ -5,10 +5,15 @@ import { CreateUserDto } from './dto/create-user.dto';
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
-
+  
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  register(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.register(createUserDto);
+  }
+
+  @Post("login")
+  async login(@Body() loginUserDto: CreateUserDto) {
+    return this.usersService.login(loginUserDto);
   }
 
   @Get()
@@ -16,10 +21,11 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Get(':username')
-  async findOne(@Param('username') username: string) {
-    return this.usersService.findOne(username);
-  }
+
+  // @Get(':username')
+  // async findOne(@Param('username') username: string) {
+  //   return this.usersService.findOne(username);
+  // }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
