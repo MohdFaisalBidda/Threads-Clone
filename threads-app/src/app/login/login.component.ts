@@ -12,11 +12,12 @@ import { FormsModule } from '@angular/forms';
 })
 export class LoginComponent {
   username: string = "";
+  password: string = "";
 
   constructor(private userService: UsersService, private router: Router) { }
 
   submitForm() {
-    this.userService.findUserByName(this.username).subscribe((user) => {
+    this.userService.findUserByName(this.username, this.password).subscribe((user) => {
       this.userService.saveUsertoLocalStorage(user)
       console.log(user);
       this.router.navigate(["/"])

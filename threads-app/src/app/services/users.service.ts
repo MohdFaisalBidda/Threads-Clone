@@ -19,8 +19,10 @@ export class UsersService {
     })
   }
 
-  findUserByName(username: string) {
-    return this.http.get<User>(`${environment.apiBaseUrl}/${username}`)
+  findUserByName(username: string, password: string) {
+    return this.http.post<User>(`${environment.apiBaseUrl}/users/login`, {
+      username, password
+    })
   }
 
   saveUsertoLocalStorage(user: User) {
