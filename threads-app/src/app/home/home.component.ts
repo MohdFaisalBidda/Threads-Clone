@@ -24,9 +24,9 @@ export class HomeComponent implements OnInit {
     const user = this.userService.getUserFromLocalStorage()
     console.log(user);
     
-    if (!user) {
-      this.userService.createUser(this.username)
-    }
+    // if (!user) {
+    //   this.userService.createUser(this.username)
+    // }
     this.fetchComments();
   }
 

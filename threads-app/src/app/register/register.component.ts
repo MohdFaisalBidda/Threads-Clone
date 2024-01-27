@@ -12,11 +12,12 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent {
   username: string = "";
+  password: string = "";
 
   constructor(private userService: UsersService, private router: Router) { }
 
   submitForm() {
-    this.userService.createUser(this.username).subscribe((user) => {
+    this.userService.createUser(this.username, this.password).subscribe((user) => {
       this.userService.saveUsertoLocalStorage(user);
       console.log(user);
       this.router.navigate(["/home"])

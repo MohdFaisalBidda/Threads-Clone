@@ -13,9 +13,9 @@ export class UsersService {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
 
-  createUser(name: string) {
+  createUser(username: string, password: string) {
     return this.http.post<User>(`${environment.apiBaseUrl}/users`, {
-      name
+      username, password
     })
   }
 
