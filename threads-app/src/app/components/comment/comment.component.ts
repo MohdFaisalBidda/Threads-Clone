@@ -18,6 +18,10 @@ export class CommentComponent {
   commonService = inject(CommentService)
   nestedComments = signal<Comment[]>([]);
 
+  getuserName(){
+    return `@${this.comment.user.username}`
+  }
+
   nestedCommentsEffect = effect(() => {
     if (this.isExpanded()) {
       this.commonService.getComments(this.comment._id).subscribe(comments => {

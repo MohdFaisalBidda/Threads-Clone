@@ -1,5 +1,23 @@
-<form>
-  <textarea placeholder="Write Something..." name="" class="px-3 py-1.5 w-full border border-slate-900 rounded-md text-lg"  rows="3">
-
+<form class="flex items-end gap-2" (submit)="formSubmit($event)">
+  <textarea
+    placeholder="placeholder"
+    name="commentText"
+    class="relative px-2 py-1.5 w-full border border-slate-900 rounded-md text-lg"
+    rows="1"
+  >
   </textarea>
+  <button
+    class="group relative inline-block focus:outline-none focus:ring"
+    type="submit"
+  >
+    <span
+      class="absolute inset-0 translate-x-0 translate-y-0 bg-green-300 transition-transform"
+    ></span>
+
+    <span
+      class="relative inline-block border-2 border-current px-8 py-2 rounded-lg text-sm font-bold uppercase tracking-widest"
+    >
+      {{btnText}}
+    </span>
+  </button>
 </form>
