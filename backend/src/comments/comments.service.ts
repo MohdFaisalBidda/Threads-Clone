@@ -20,13 +20,13 @@ export class CommentsService {
   }
 
   findAll() {
-    return this.commentModel.find().populate(["user", "parent"]).exec();
+    return this.commentModel.find().populate(["user", "parent"]).sort({ createdAt: -1 }).exec();
   }
 
   findTopLevelComments() {
     return this.commentModel.find({
       parent: null
-    }).populate(["user", "parent"]).exec();
+    }).populate(["user", "parent"]).sort({ createdAt: -1 }).exec();
   }
 
   findCommentsByParentId(parentId: string) {
