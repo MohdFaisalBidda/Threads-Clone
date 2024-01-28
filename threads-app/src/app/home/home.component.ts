@@ -49,4 +49,8 @@ export class HomeComponent implements OnInit {
       this.comments.set([createdComment, ...this.comments()])
     });
   }
+
+  commentTrackBy(_index: number, comment: Comment) {
+    return comment._id
+  }
 }

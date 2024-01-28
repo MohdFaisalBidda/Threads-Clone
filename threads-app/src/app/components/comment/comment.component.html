@@ -9,7 +9,7 @@
         {{ comment.user.username.substring(0, 1).toLocaleUpperCase() }}
       </div>
       <h3 class="text-lg font-bold text-gray-900 sm:text-xl">
-        {{this.getuserName()}}
+        {{ this.getuserName() }}
       </h3>
     </div>
   </div>
@@ -62,12 +62,16 @@
     </button>
   </div>
   <section class="my-4" *ngIf="isReplying()">
-    <app-comment-form placeholder="Reply Here..." btnText="Reply"></app-comment-form>
+    <app-comment-form
+      placeholder="Reply Here..."
+      btnText="Reply"
+      (formSubmitted)="createComment($event)"
+    ></app-comment-form>
   </section>
   <section class="flex flex-col gap-y-4" *ngIf="isExpanded()">
     <app-comment
       [comment]="nestedComment"
-      *ngFor="let nestedComment of nestedComments()"
+      *ngFor="let nestedComment of nestedComments(); trackBy: commentTrackBy"
     ></app-comment>
   </section>
 </a>

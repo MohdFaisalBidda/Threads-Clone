@@ -3,6 +3,7 @@ import { Component, Input, effect, inject, signal } from '@angular/core';
 import { CommentFormComponent } from '../comment-form/comment-form.component';
 import { Comment } from '../../../../interfaces/comments.interface';
 import { CommentService } from '../../services/comment.service';
+import { UsersService } from '../../services/users.service';
 
 @Component({
   selector: 'app-comment',
@@ -15,16 +16,17 @@ export class CommentComponent {
   @Input() comment!: Comment;
   isExpanded = signal<boolean>(false);
   isReplying = signal<boolean>(false);
-  commonService = inject(CommentService)
+  commentService = inject(CommentService)
+  userService = inject(UsersService)
   nestedComments = signal<Comment[]>([]);
 
-  getuserName(){
+  getuserName() {
     return `@${this.comment.user.username}`
   }
 
   nestedCommentsEffect = effect(() => {
     if (this.isExpanded()) {
-      this.commonService.getComments(this.comment._id).subscribe(comments => {
+      this.commentService.getComments(this.comment._id).subscribe(comments => {
         this.nestedComments.set(comments)
       })
     }
@@ -40,4 +42,24 @@ export class CommentComponent {
   toggleExpand() {
     this.isExpanded.set(!this.isExpanded());
   }
+
+
+  createComment(formValues: { text: string }) {
+    const { text } = formValues;
+    const user = this.userService.getUserFromLocalStorage()
+    if (!user) {
+      return;
+    }
+    this.commentService.createComment({
+      userId: user?._id, text,
+      parentId: this.comment._id
+    }).subscribe(createdComment => {
+      this.nestedComments.set([createdComment, ...this.nestedComments()])
+    });
+  }
+
+  commentTrackBy(_index: number, comment: Comment) {
+    return comment._id
+  }
+
 }

@@ -2,10 +2,14 @@
   *ngIf="userService.getUserFromLocalStorage(); else loginForm"
   class="max-w-xl mx-auto flex flex-col gap-8"
 >
-<app-comment-form placeholder="Write Something..." btnText="Post" (formSubmitted)="createComment($event)"></app-comment-form>
+  <app-comment-form
+    placeholder="Write Something..."
+    btnText="Post"
+    (formSubmitted)="createComment($event)"
+  ></app-comment-form>
   <app-comment
     [comment]="comment"
-    *ngFor="let comment of comments()"
+    *ngFor="let comment of comments(); trackBy: commentTrackBy"
   ></app-comment>
 </section>
 <ng-template #loginForm>

@@ -32,7 +32,7 @@ export class CommentsService {
   findCommentsByParentId(parentId: string) {
     return this.commentModel.find({
       parent: parentId
-    }).populate(["user", "parent"]).exec();
+    }).populate(["user", "parent"]).sort({ createdAt: -1 }).exec();
   }
 
   async findOne(id: string) {
