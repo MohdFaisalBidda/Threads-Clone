@@ -1,4 +1,4 @@
-<a
+<!-- <a
   class="relative block overflow-hidden rounded-lg border border-gray-200 shadow-xl p-4 sm:p-6 lg:p-8"
 >
   <div class="sm:flex sm:justify-between sm:gap-4">
@@ -15,7 +15,7 @@
   </div>
 
   <div class="mt-4">
-    <p class="text-sm text-gray-500">
+    <p class="text-lg text-gray-500 font-pacifico">
       {{ comment.text }}
     </p>
   </div>
@@ -74,4 +74,76 @@
       *ngFor="let nestedComment of nestedComments(); trackBy: commentTrackBy"
     ></app-comment>
   </section>
-</a>
+</a> -->
+
+<div class="space-y-6">
+  <div class="border p-4 rounded-md my-4">
+    <div class="flex items-baseline gap-4">
+      <span
+        class="relative flex shrink-0 overflow-hidden rounded-full w-10 h-10 border"
+      >
+        <div
+          class="w-10 h-10 bg-blue-600 text-gray-100 rounded-full flex justify-center items-center text-xl font-bold"
+        >
+          {{ comment.user.username.substring(0, 1).toLocaleUpperCase() }}
+        </div>
+      </span>
+      <div class="flex-1 space-y-2">
+        <div class="flex items-center gap-2">
+          <div class="text-xl text-blue-500">{{ this.getuserName() }}</div>
+        </div>
+        <div class="font-pacifico text-lg">{{ comment.text }}</div>
+        <div class="flex gap-4 items-center justify-end">
+          <svg
+            (click)="toggleReply()"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-8 h-8 cursor-pointer hover:translate-y-1 duration-200"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z"
+            />
+          </svg>
+          <button
+            (click)="toggleExpand()"
+            class="duration-200"
+            [class.rotate-180]="isExpanded()"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m4.5 15.75 7.5-7.5 7.5 7.5"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="border-l border-gray-200 pl-4 my-4">
+      <app-comment
+        [comment]="nestedComment"
+        *ngFor="let nestedComment of nestedComments(); trackBy: commentTrackBy"
+      ></app-comment>
+    </div>
+    <section class="my-4" *ngIf="isReplying()">
+      <app-comment-form
+        placeholder="Reply Here..."
+        btnText="Reply"
+        (formSubmitted)="createComment($event)"
+      ></app-comment-form>
+    </section>
+  </div>
+</div>

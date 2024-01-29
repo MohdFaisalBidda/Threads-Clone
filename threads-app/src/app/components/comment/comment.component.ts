@@ -41,6 +41,8 @@ export class CommentComponent {
 
   toggleExpand() {
     this.isExpanded.set(!this.isExpanded());
+    console.log(this.isExpanded());
+    
   }
 
 
