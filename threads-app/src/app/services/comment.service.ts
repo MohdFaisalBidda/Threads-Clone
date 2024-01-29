@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { environment } from '../../../environment';
+import { environment } from '../../environments/environment';
 import { Comment } from '../../../interfaces/comments.interface';
 
 interface CreateCommentDto {
