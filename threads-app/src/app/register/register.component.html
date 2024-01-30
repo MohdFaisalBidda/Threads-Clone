@@ -3,6 +3,11 @@
         <h1 class="text-4xl mx-auto">Register</h1>
         <input name="username" type="text" placeholder="Username" [(ngModel)]="username" class="border-2 p-2 border-black rounded-md">
         <input name="password" type="password" placeholder="Password" [(ngModel)]="password" class="border-2 p-2 border-black rounded-md">
-        <button type="submit" class="p-3 bg-green-500 rounded-md text-lg hover:bg-green-300 duration-200">Submit</button>
+        <button [disabled]="loading" type="submit" class="p-3 bg-green-500 rounded-md text-lg hover:bg-green-300 duration-200 disabled:bg-green-300 disabled:cursor-wait">
+            <ng-container *ngIf="!loading; else loader">Submit</ng-container>
+            <ng-template #loader>
+              <app-loader></app-loader>
+            </ng-template>
+        </button>
     </form>
 </div>
